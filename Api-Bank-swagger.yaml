@@ -1,0 +1,1322 @@
+openapi: 3.0.0
+info:
+  version: v1
+  title: API Bank
+  description: 'Api de pequeño banco con diferentes funciones.'
+  contact:
+    name: Alba González
+    email: albag3113@gmail.com
+  license: 
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/albag3113/Bank/v1
+
+
+
+
+paths:
+  /users:
+    post: 
+      security: 
+         - Oauth2: [read, write]
+      description: Crear nuevo usuario
+      tags:
+        - Users
+      summary: >- 
+        Crear usuario
+      requestBody:
+        description: User
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: 
+                '#/components/schemas/Users'
+              
+      responses:
+        '201':
+          description: Usuario creado.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/User'
+        '400':
+          description: Error al crear usuario.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '401':
+          description: Error de autenticación.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '403':
+          description: Error de autorización.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '404':
+          description: ruta no encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '406':
+          description: contenido no soportado.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '415':
+          description: Error de formato.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '429':
+          description: Error de limite de peticiones.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '500':
+          description: Error interno.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        default:
+          description: Error desconocido.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+    get:
+      security:
+         - Oauth2: [read, write] 
+      description: Lista de todos los usuarios
+      tags:
+        - Users
+      summary: >-
+        Lista de usuarios
+      responses:
+        '200':
+          description: Listado de usuarios.
+          content:
+            application/json:
+              schema:
+                type: array
+                maxItems: 100
+                items:
+                  $ref: 
+                    '#/components/schemas/User'
+        '401':
+          description: Error de autenticación.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '403':
+          description: Error de autorización.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '404':
+          description: ruta no encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '406':
+          description: contenido no soportado.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '415':
+          description: Error de formato.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '429':
+          description: Error de limite de peticiones.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '500':
+          description: Error interno.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+    
+          
+  /users/{userId}:
+    get:
+      security:
+         - Oauth2: [read, write]
+      description: Información de un usuario
+      tags:
+        - Users
+      summary: >-
+        Informacion usuario
+      parameters: 
+       - name: userId
+         in: path
+         description: Informacion usuario.
+         required: true
+         schema:
+           type: string
+           pattern: ^[0-9a-fA-F]{24}$
+           maxLength: 50
+      responses:
+        '200':
+          description: Usuario.
+          content:
+            application/json:
+              schema:
+                  $ref: 
+                    '#/components/schemas/User'
+        '401':
+          description: Error de autenticación.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '403':
+          description: Error de autorización.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '404':
+          description: ruta no encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '406':
+          description: contenido no soportado.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '415':
+          description: Error de formato.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '429':
+          description: Error de limite de peticiones.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '500':
+          description: Error interno.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error' 
+    
+    delete:
+      security:
+         - Oauth2: [read, write]
+      tags:
+        - Users
+      summary: >-
+         Eliminar usuario
+      parameters:
+        - name: userId
+          in: path                   
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9a-fA-F]{24}$
+            maxLength: 50
+      responses:
+        '200':
+          description: Eliminar usuario.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Users'
+        '401':
+          description: Error de autenticación.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '403':
+          description: Error de autorización.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '404':
+          description: ruta no encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '406':
+          description: contenido no soportado.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '415':
+          description: Error de formato.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '429':
+          description: Error de limite de peticiones.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '500':
+          description: Error interno.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+    
+  /users/{userId}/accounts:
+    get:
+      security:
+         - Oauth2: [read, write]
+      description: Lista de todas las cuentas del usuario.
+      tags:
+        - Users
+      summary: >-
+        Lista de cuentas de ususario
+      parameters:
+        - name: userId
+          in: path                   
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9a-fA-F]{24}$
+            maxLength: 50
+      responses:
+        '200':
+          description: Listado de cuentas.
+          content:
+            application/json:
+              schema:
+                type: array
+                maxItems: 100
+                items:
+                  $ref: 
+                    '#/components/schemas/Accounts'
+        '401':
+          description: Error de autenticación.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '403':
+          description: Error de autorización.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '404':
+          description: ruta no encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '406':
+          description: contenido no soportado.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '415':
+          description: Error de formato.  
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '429':
+          description: Error de limite de peticiones.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '500':
+          description: Error interno.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error' 
+    
+  /accounts:
+    post:
+      security:
+         - Oauth2: [read, write]
+      description: Crear nueva cuenta
+      tags: 
+        - Account
+      summary: >-
+        Crear cuenta
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 
+                '#/components/schemas/Accounts'
+      responses:
+        '201':
+          description: Usuario creado.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Accounts'
+        '401':
+          description: Error de autenticación.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '403':
+          description: Error de autorización.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '404':
+          description: ruta no encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '406':
+          description: contenido no soportado.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '415':
+          description: Error de formato.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '429':
+          description: Error de limite de peticiones.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '500':
+          description: Error interno. 
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error' 
+      
+          
+  /accounts/{accountId}:
+    delete:
+      security:
+         - Oauth2: [read, write]
+      tags:
+        - Account
+      summary: >-
+         Eliminar cuenta
+      parameters:
+        - name: accountId
+          in: path                   
+          required: true
+          schema:
+            type: string
+            pattern: ^[0-9a-fA-F]{24}$
+            maxLength: 100
+      responses:
+        '200':
+          description: Eliminar cuenta.
+          content:
+            application/json:
+              schema:
+                type: array
+                maxItems: 100
+                items:
+                  $ref: '#/components/schemas/Accounts'
+        '401':
+          description: Error de autenticación.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '403':
+          description: Error de autorización.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '404':
+          description: ruta no encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '406':
+          description: contenido no soportado.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '415':
+          description: Error de formato.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '429':
+          description: Error de limite de peticiones.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '500':
+          description: Error interno.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+ 
+  
+  /accounts/{accountId}/movements:
+    get:
+      security:
+         - Oauth2: [read, write]
+      description: Ver movimientos de la cuenta
+      tags:
+        - Account
+      summary: >-
+        Movimientos de cuenta 
+      parameters: 
+       - name: accountId
+         in: path
+         description: Movimientos.
+         required: true
+         schema:
+           type: string
+           pattern: ^[0-9a-fA-F]{24}$
+           maxLength: 100
+      responses:
+        '200':
+          description: Movimientos.
+          content:
+            application/json:
+              schema:
+                  $ref: 
+                    '#/components/schemas/Movements'
+        '401':
+          description: Error de autenticación.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '403':
+          description: Error de autorización.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '404':
+          description: ruta no encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '406':
+          description: contenido no soportado.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '415':
+          description: Error de formato.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '429':
+          description: Error de limite de peticiones.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '500':
+          description: Error interno.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+                
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'  
+      
+  /accounts/{accountId}/balance:
+    get:
+      security:
+         - Oauth2: [read, write]
+      description: Ver balance de la cuenta
+      tags:
+        - Account
+      summary: >-
+        Balance de cuenta 
+      parameters: 
+       - name: accountId
+         in: path
+         description: Balance.
+         required: true
+         schema:
+           type: string
+           pattern: ^[0-9a-fA-F]{24}$
+           maxLength: 100
+      responses:
+        '200':
+          description: Balance.
+          content:
+            application/json:
+              schema:
+                  $ref: 
+                    '#/components/schemas/Balance'
+        '401':
+          description: Error de autenticación.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '403':
+          description: Error de autorización.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '404':
+          description: ruta no encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '406':
+          description: contenido no soportado.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '415':
+          description: Error de formato.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '429':
+          description: Error de limite de peticiones.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '500':
+          description: Error interno.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'  
+  
+  /accounts/{accountId}/deposit:
+    post:
+      security:
+         - Oauth2: [read, write]
+      description: Hacer un deposito
+      tags: 
+        - Transactions
+      summary: >-
+        Deposito
+      parameters: 
+       - name: accountId
+         in: path
+         description: Deposit.
+         required: true
+         schema:
+           type: string
+           pattern: ^[0-9a-fA-F]{24}$
+           maxLength: 100
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 
+                '#/components/schemas/Deposit'
+      responses:
+        '201':
+          description: Deposito creado.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Deposit'
+        '401':
+          description: Error de autenticación.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '403':
+          description: Error de autorización.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '404':
+          description: ruta no encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '406':
+          description: contenido no soportado.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '415':
+          description: Error de formato.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '429':
+          description: Error de limite de peticiones.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '500':
+          description: Error interno.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+    
+  /accounts/{accountId}/withdraw:
+    post:
+      security:
+         - Oauth2: [read, write]
+      description: Sacar dinero
+      tags: 
+        - Transactions
+      summary: >-
+        Retirada
+      parameters: 
+       - name: accountId
+         in: path
+         description: Withdraw.
+         required: true
+         schema:
+           type: string
+           pattern: ^[0-9a-fA-F]{24}$
+           maxLength: 100
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: 
+                '#/components/schemas/Withdraw'
+      responses:
+        '201':
+          description: Retirada creada.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Withdraw'
+        '401':
+          description: Error de autenticación.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '403':
+          description: Error de autorización.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '404':
+          description: ruta no encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '406':
+          description: contenido no soportado.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '415':
+          description: Error de formato.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '429':
+          description: Error de limite de peticiones.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '500':
+          description: Error interno.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'        
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+          
+  /accounts/{accountId}/transfer:
+    post:
+      security:
+         - Oauth2: [read, write]
+      description: Hacer una transferencia 
+      tags: 
+        - Transactions
+      summary: >-
+        Transferencia
+      parameters: 
+       - name: accountId
+         in: path
+         description: Transfer.
+         required: true
+         schema:
+           type: string
+           pattern: ^[0-9a-fA-F]{24}$
+           maxLength: 100
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              maxItems: 100
+              items: 
+                $ref: 
+                  '#/components/schemas/Transfer'
+      responses:
+        '201':
+          description: Transferencia exitosa.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Transfer'
+        '401':
+          description: Error de autenticación.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '403':
+          description: Error de autorización.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '404':
+          description: ruta no encontrada.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '406':
+          description: contenido no soportado.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '415':
+          description: Error de formato.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '429':
+          description: Error de limite de peticiones.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        '500':
+          description: Error interno.
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error'
+        default:
+          description: unexpected error
+          content:
+            application/json:
+              schema:
+                $ref: 
+                  '#/components/schemas/Error' 
+
+
+
+components:
+
+  securitySchemes:
+    Oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: http://localhost:3000/auth/login
+          scopes:
+            read: >-
+              Permiso para leer información
+            write: >-
+              Permiso para escribir información
+
+  schemas:
+  
+    Users:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+          maximum: 100
+          minimum: 36
+        name:
+          type: string
+          pattern: ^[a-zA-Z]+$ 
+          maxLength: 50
+          minLength: 3
+          example: Juan
+        surname:
+          type: string
+          pattern: ^[a-zA-Z]+$
+          maxLength: 50
+          example: Perez
+        dni:
+          type: string
+          maxLength: 9
+          pattern: '^[0-9]{8}[A-Z]$'
+          example: 57468453G
+        direction:
+          type: string
+          maxLength: 70
+          pattern: '/^[a-z ,.''-]+$/i'
+        phone:
+          type: string
+          maxLength: 9
+          pattern: '^[0-9]{9}$'
+        email:
+          type: string
+          format: email
+          example: aljd@gmail.com
+          maxLength: 50
+          pattern: '^[a-zA-Z0-9.!#$%&*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$' 
+        password:
+          type: string
+          format: password
+          pattern: '^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$'
+          maxLength: 50
+      required:
+        - id
+        - name
+        - surname
+        - phone
+        - email
+        - dni
+        - direction
+        - password 
+    User:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int64
+          maximum: 100
+          minimum: 36
+        name:
+          type: string
+          pattern: ^[a-zA-Z]+$
+          maxLength: 50
+          minLength: 3
+          example: 'Juan'
+        surname:
+          type: string
+          pattern: ^[a-zA-Z]+$
+          maxLength: 50
+          example: Perez
+        dni:
+          type: string
+          maxLength: 9
+          pattern: '^[0-9]{8}[A-Z]$'
+          example: 57468453G
+        direction:
+          type: string
+          maxLength: 70
+          pattern: '/^[a-z ,.''-]+$/i'
+        phone:
+          type: string
+          maxLength: 9
+          pattern: '^[0-9]{9}$'
+        email:
+          type: string
+          format: email
+          maxLength: 50
+          pattern: >-
+            (?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])
+          example: example@example.com
+      required:
+        - id
+        - name
+        - surname
+        - phone
+        - email
+        - dni
+        - direction
+        
+    Accounts:
+      type: object
+      additionalProperties: false
+      properties:
+        accountId: 
+          type: string
+          format: uuid
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+          maxLength: 36
+        balance:
+          type: object
+          additionalProperties: false
+          properties:
+            amount:
+              type: number
+              format: double
+              example: 100.00
+              minimum: 0
+              maximum: 900000000000000
+            currency:
+              type: string
+              example: 'EUR'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+        movements:
+            type: object
+            additionalProperties: false
+    Movements:
+      additionalProperties: false
+      type: object
+      properties:
+        movementId:
+          type: string
+          format: uuid
+          pattern: ^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$
+          maxLength: 36
+        movementsEntry:
+          type: object
+          additionalProperties: false
+          properties:
+            amount:
+              type: number
+              format: double
+              example: 100.00
+              minimum: 0
+              maximum: 900000000000000
+            currency:
+              type: string
+              example: 'EUR'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+        movementsExit:
+          type: object
+          additionalProperties: false
+          properties:
+            amount:
+              type: number
+              format: double
+              example: 100.00
+              minimum: 0
+              maximum: 900000000000000
+            currency:
+              type: string
+              example: 'EUR'
+              pattern: '^[A-Z]{3}$'
+              maxLength: 3
+    Balance:
+      type: object
+      additionalProperties: false
+      properties:
+        active:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 900000000000000
+          example: 100.00
+        pasive:
+          type: number  
+          format: double
+          minimum: 0
+          maximum: 900000000000000
+          example: 100.00
+        heritage:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 900000000000000
+          example: 100.00
+    Deposit:
+      type: object
+      additionalProperties: false
+      properties:
+        quantity:
+          type: number
+          format: double
+          example: 100.00
+          minimum: 0
+          maximum: 900000000000000     
+    Withdraw: 
+      type: object
+      additionalProperties: false
+      properties:
+       balance:
+         type: number
+         format: double
+         example: 100.00
+         minimum: 0
+         maximum: 900000000000000
+       quantity:
+         type: number
+         format: double
+         example: 100.00
+         minimum: 0
+         maximum: 900000000000000   
+    Transfer:
+      type: object
+      additionalProperties: false
+      properties:
+        quantity:
+           type: number
+           format: double
+           example: 100.00
+           minimum: 0
+           maximum: 900000000000000
+        payerIban:
+           type: string
+           format: uuid
+           pattern: '^[a-z]{5,10}$'
+           maxLength: 36
+        beneficiaryIban:
+          type: string
+          format: uuid
+          pattern: '^[a-z]{5,10}$'
+          maxLength: 36
+
+    Error:
+      type: object
+      additionalProperties: false
+      properties:
+        code:
+          description: Código de error
+          type: string
+          pattern: '^[a-z]{5,10}$'
+          maxLength: 36
+        status:
+          description: httpstatus
+          type: integer
+          format: int32
+          maximum: 599
+          minimum: 200
+        type:
+          type: string
+          description: Tipo de error
+          pattern: '^[a-z]{5,10}$'
+          maxLength: 36
+        message:
+          type: string
+          description: Mensaje de error 
+          pattern: '^[a-z]{5,10}$'
+          maxLength: 36
+

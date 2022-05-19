@@ -20,7 +20,7 @@ paths:
   /users:
     post: 
       security: 
-         - Oauth2: [read, write]
+        - Oauth2: [read, write]
       description: Crear nuevo usuario
       tags:
         - Users
